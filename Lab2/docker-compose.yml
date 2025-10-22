@@ -1,11 +1,12 @@
 services:
   lab2:
-    image: lab2-inf-unipi:latest
+    image: fantoni1/lab2-inf-unipi:latest
     container_name: lab2
     volumes:
-      - ./data/:/app
+      - ./data/:/home/user
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
     ports:
       - 2222:22
-    tty: true              # mantiene la sessione aperta
-    stdin_open: true       # abilita l'input interattivo
-    command: tail -f /dev/null

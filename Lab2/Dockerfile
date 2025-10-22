@@ -7,7 +7,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-        ssh \
+        openssh-server \
+	ssh \
 	curl \
         wget \
         git \
@@ -29,6 +30,10 @@ RUN apt-get install -y \
 
 RUN useradd -m user && yes password | passwd user
 
-WORKDIR /app
+RUN mkdir -p /run/sshd
 
-CMD ["/bin/bash"]
+WORKDIR /home/user
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]
